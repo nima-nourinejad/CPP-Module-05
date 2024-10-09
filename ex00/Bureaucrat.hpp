@@ -11,7 +11,18 @@ class Bureaucrat
       private:
 	std::string const _name;
 	int _grade;
-	
+	class GradeTooHighException : public std::out_of_range
+	{
+	      public:
+		GradeTooHighException (std::string const& name, std::string const& type, int grade);
+	};
+	class GradeTooLowException : public std::out_of_range
+	{
+	      public:
+		GradeTooLowException (std::string const& name, std::string const& type, int grade);
+	};
+	static const int _lowestGrade;
+	static const int _highestGrade;
 
       public:
 	Bureaucrat (std::string const& name, int grade);
@@ -23,17 +34,6 @@ class Bureaucrat
 	int getGrade () const;
 	void incrementGrade ();
 	void decrementGrade ();
-
-	class GradeTooHighException : public std::out_of_range
-	{
-	      public:
-		GradeTooHighException (std::string const& name, std::string const& type, int grade);
-	};
-	class GradeTooLowException : public std::out_of_range
-	{
-	      public:
-		GradeTooLowException (std::string const& name, std::string const& type, int grade);
-	};
 };
 
 std::ostream& operator<< (std::ostream& out, Bureaucrat const& src);

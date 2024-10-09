@@ -1,28 +1,41 @@
 #include "Bureaucrat.hpp"
 
-constexpr int LOWEST_GRADE = 150;
-constexpr int HIGHEST_GRADE = 1;
+const int Bureaucrat::_lowestGrade = 150;
+const int Bureaucrat::_highestGrade = 1;
 
 Bureaucrat::Bureaucrat ()
-    : _name ("no_name"), _grade (LOWEST_GRADE){};
+    : _name ("no_name"), _grade (_lowestGrade){};
 
 Bureaucrat::Bureaucrat (std::string const& name, int grade)
     : _name (name)
 {
-	if (grade > LOWEST_GRADE)
+	if (grade > _lowestGrade)
 		throw Bureaucrat::GradeTooLowException (name, "construction", grade);
-	if (grade < HIGHEST_GRADE)
+	if (grade < _highestGrade)
 		throw Bureaucrat::GradeTooHighException (name, "construction", grade);
 	_grade = grade;
 };
 
 Bureaucrat::Bureaucrat (Bureaucrat const& src)
-    : _name (src._name), _grade (src._grade){};
+    : _name (src._name)
+{
+	if (src._grade > _lowestGrade)
+		throw Bureaucrat::GradeTooLowException (_name, "copy construction", src._grade);
+	if (src._grade < _highestGrade)
+		throw Bureaucrat::GradeTooHighException (_name, "copy construction", src._grade);
+	_grade = src._grade;
+};
 
 Bureaucrat& Bureaucrat::operator= (Bureaucrat const& src)
 {
-	if (this != &src)
-		_grade = src._grade;
+	if (this == &src)
+		return *this;
+
+	if (src._grade > _lowestGrade)
+		throw Bureaucrat::GradeTooLowException (_name, "copy assignment", src._grade);
+	if (src._grade < _highestGrade)
+		throw Bureaucrat::GradeTooHighException (_name, "copy assignment", src._grade);
+	_grade = src._grade;
 	return *this;
 };
 
@@ -43,14 +56,14 @@ int Bureaucrat::getGrade () const
 
 void Bureaucrat::incrementGrade ()
 {
-	if ((_grade - 1) < HIGHEST_GRADE)
+	if ((_grade - 1) < _highestGrade)
 		throw Bureaucrat::GradeTooHighException (_name, "incrementGrade", (_grade - 1));
 	--_grade;
 };
 
 void Bureaucrat::decrementGrade ()
 {
-	if ((_grade + 1) > LOWEST_GRADE)
+	if ((_grade + 1) > _lowestGrade)
 		throw Bureaucrat::GradeTooLowException (_name, "decrementGrade", (_grade + 1));
 	++_grade;
 };

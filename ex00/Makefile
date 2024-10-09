@@ -1,4 +1,4 @@
-NAME = app
+NAME = app.out
 CXX = c++
 RM = rm -f
 CXXFLAGS = -Wall -Wextra -Werror -std=c++20
