@@ -1,0 +1,12 @@
+# .clang-format
+
+BasedOnStyle: LLVM # You can also try Google style for comparison, but LLVM is more spacious
+IndentWidth: 8     # Indentation size, set to 8 to emphasize spacing
+UseTab: Always     # Always use tabs instead of spaces for indentation
+BreakBeforeBraces: Allman # Always put { on a new line
+AllowShortFunctionsOnASingleLine: false # Prevent functions from being written in a single line
+ColumnLimit: 0     # No limit on column width
+SpacesInParentheses: false # Avoid extra spaces inside parentheses to keep things clean
+SpaceBeforeParens: Always # Add a space before function parentheses for better readability
+SpacesInAngles: false # Avoid spaces in template angle brackets for conciseness
+PointerAlignment: Left # Pointers aligned to the left for consistency
