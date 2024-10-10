@@ -31,7 +31,7 @@ int main ()
 		Bureaucrat o8 ("o8", 1);
 		o8.incrementGrade ();
 	}
-	catch (std::exception& e)
+	catch (std::exception & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}

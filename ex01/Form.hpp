@@ -15,31 +15,29 @@ class Form
 		int const _signGrade;
 		int const _executeGrade;
 
+	public:
+		Form ();
+		Form (std::string const & name, int grade);
+		Form (Form const & src);
+		Form & operator= (Form const & src);
+		~Form ();
+		std::string & getName () const;
+		bool getSigned () const;
+		int getSignGrade () const;
+		int getExecuteGrade () const;
+		void beSigned (Bureaucrat const & bureaucrat);
 		class GradeTooHighException : public std::out_of_range
 		{
 			public:
-				GradeTooHighException (std::string const& name, Bureaucrat const& bureaucrat);
+				GradeTooHighException (std::string const & name, Bureaucrat const & bureaucrat);
 		};
 		class GradeTooLowException : public std::out_of_range
 		{
 			public:
-				GradeTooLowException (std::string const& name, Bureaucrat const& bureaucrat);
+				GradeTooLowException (std::string const & name, Bureaucrat const & bureaucrat);
 		};
-		void beSigned (Bureaucrat const& bureaucrat);
-		void signForm () const;
-
-	public:
-		Form ();
-		Form (std::string const& name, int grade);
-		Form (Form const& src);
-		Form& operator= (Form const& src);
-		~Form ();
-		std::string& getName () const;
-		bool getSigned () const;
-		int getSignGrade () const;
-		int getExecuteGrade () const;
 };
 
-std::ostream& operator<< (std::ostream& out, Form const& src);
+std::ostream & operator<< (std::ostream & out, Form const & src);
 
 #endif
