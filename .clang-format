@@ -1,5 +1,3 @@
-# .clang-format
-
 BasedOnStyle: LLVM # You can also try Google style for comparison, but LLVM is more spacious
 IndentWidth: 8     # Indentation size, set to 8 to emphasize spacing
 UseTab: Always     # Always use tabs instead of spaces for indentation
@@ -10,3 +8,4 @@ SpacesInParentheses: false # Avoid extra spaces inside parentheses to keep thing
 SpaceBeforeParens: Always # Add a space before function parentheses for better readability
 SpacesInAngles: false # Avoid spaces in template angle brackets for conciseness
 PointerAlignment: Left # Pointers aligned to the left for consistency
+IndentAccessModifiers: true # Indent after public, private, and protected access specifiers
