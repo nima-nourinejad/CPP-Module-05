@@ -1,7 +1,8 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
 
-#include "Form.hpp"
+// #include "Form.hpp"
+class Form;
 #include <iostream>
 #include <ostream>
 #include <stdexcept>

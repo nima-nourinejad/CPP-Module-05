@@ -1,10 +1,11 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 const int Bureaucrat::_lowestGrade = 150;
 const int Bureaucrat::_highestGrade = 1;
 
 Bureaucrat::Bureaucrat ()
-    : _name ("no_name"), _grade (_lowestGrade){};
+    : _name ("no_name_bureaucrat"), _grade (_lowestGrade){};
 
 Bureaucrat::Bureaucrat (std::string const & name, int grade)
     : _name (name)
@@ -85,7 +86,7 @@ void Bureaucrat::signForm (Form & form) const
 	try
 	{
 		form.beSigned (*this);
-		std::cout << *this << " signed " << form;
+		std::cout << *this << " signed " << form << std::endl;
 	}
 	catch (Form::GradeTooLowException const & e)
 	{

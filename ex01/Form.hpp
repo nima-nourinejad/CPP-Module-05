@@ -1,11 +1,12 @@
 #ifndef FORM_HPP
 #define FORM_HPP
 
-#include "Bureaucrat.hpp"
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+// #include "Bureaucrat.hpp"
+class Bureaucrat;
 
 class Form
 {
@@ -17,11 +18,11 @@ class Form
 
 	public:
 		Form ();
-		Form (std::string const & name, int grade);
+		Form (std::string const & name, int signGrade, int executeGrade);
 		Form (Form const & src);
 		Form & operator= (Form const & src);
 		~Form ();
-		std::string & getName () const;
+		std::string const & getName () const;
 		bool getSigned () const;
 		int getSignGrade () const;
 		int getExecuteGrade () const;
@@ -29,12 +30,12 @@ class Form
 		class GradeTooHighException : public std::out_of_range
 		{
 			public:
-				GradeTooHighException (std::string const & name, Bureaucrat const & bureaucrat);
+				GradeTooHighException (Form const & form, Bureaucrat const & bureaucrat);
 		};
 		class GradeTooLowException : public std::out_of_range
 		{
 			public:
-				GradeTooLowException (std::string const & name, Bureaucrat const & bureaucrat);
+				GradeTooLowException (Form const & form, Bureaucrat const & bureaucrat);
 		};
 };
 

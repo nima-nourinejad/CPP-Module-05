@@ -21,17 +21,44 @@ int main ()
 		// std::cout << "After decrement: " << *o3 << std::endl;
 		o4->incrementGrade ();
 		std::cout << "After increment: " << *o4 << std::endl;
-
-		std::cout << std::endl
-			  << "Failure" << std::endl;
-		// Bureaucrat o5 ("o5", 0);
-		// Bureaucrat o6 ("o6", 151);
-		// Bureaucrat o7("o7", 150);
-		// o7.decrementGrade ();
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	std::cout << std::endl
+		  << "Failure" << std::endl;
+	try
+	{
+		Bureaucrat o5 ("o5", 0);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Bureaucrat o6 ("o6", 151);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Bureaucrat o7 ("o7", 150);
+		o7.decrementGrade ();
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
 		Bureaucrat o8 ("o8", 1);
 		o8.incrementGrade ();
 	}
-	catch (std::exception & e)
+	catch (std::exception const & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}
