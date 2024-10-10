@@ -39,10 +39,7 @@ Bureaucrat & Bureaucrat::operator= (Bureaucrat const & src)
 	return *this;
 };
 
-Bureaucrat::~Bureaucrat ()
-{
-	std::cout << _name << " destroyed" << std::endl;
-};
+Bureaucrat::~Bureaucrat (){};
 
 std::string const & Bureaucrat::getName () const
 {

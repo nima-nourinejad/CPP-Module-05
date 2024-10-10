@@ -40,10 +40,7 @@ Bureaucrat & Bureaucrat::operator= (Bureaucrat const & src)
 	return *this;
 };
 
-Bureaucrat::~Bureaucrat ()
-{
-	std::cout << _name << " destroyed" << std::endl;
-};
+Bureaucrat::~Bureaucrat (){};
 
 std::string const & Bureaucrat::getName () const
 {
@@ -90,6 +87,6 @@ void Bureaucrat::signForm (Form & form) const
 	}
 	catch (Form::GradeTooLowException const & e)
 	{
-		std::cerr << *this << " couldn't sign " << form << " because " << e.what () << std::endl;
+		std::cerr << *this << " couldn't sign " << form << " because: " << e.what () << std::endl;
 	}
 };
