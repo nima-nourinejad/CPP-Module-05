@@ -21,6 +21,10 @@ class AForm
 		{
 			public:
 				GradeTooHighException (std::string const & name, std::string const & type, int grade);
+				GradeTooHighException();
+				GradeTooHighException(GradeTooHighException const & src);
+				GradeTooHighException & operator=(GradeTooHighException const & src);
+				~GradeTooHighException() noexcept;
 		};
 
 	public:
@@ -41,7 +45,7 @@ class AForm
 				GradeTooLowException();
 				GradeTooLowException(GradeTooLowException const & src);
 				GradeTooLowException & operator=(GradeTooLowException const & src);
-				~GradeTooLowException();
+				~GradeTooLowException() noexcept;
 		};
 		class FormNotSignedException : public std::exception
 		{

@@ -74,7 +74,17 @@ void AForm::beSigned (Bureaucrat const & bureaucrat)
 /////////////////////// Exceptions
 AForm::GradeTooHighException::GradeTooHighException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too high"){};
-
+AForm::GradeTooHighException::GradeTooHighException ()
+    : std::out_of_range ("The grade is too high"){};
+AForm::GradeTooHighException::GradeTooHighException (GradeTooHighException const & src)
+    : std::out_of_range (src.what ()){};
+AForm::GradeTooHighException & AForm::GradeTooHighException::operator= (GradeTooHighException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
+	return *this;
+}
+AForm::GradeTooHighException::~GradeTooHighException (){};
 ///////////
 
 AForm::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
@@ -82,16 +92,12 @@ AForm::GradeTooLowException::GradeTooLowException (std::string const & name, std
 AForm::GradeTooLowException::GradeTooLowException ()
     : std::out_of_range ("The grade is too low"){};
 AForm::GradeTooLowException::GradeTooLowException (AForm::GradeTooLowException const & src)
-    : std::out_of_range (src){};
-AForm::GradeTooLowException & AForm::GradeTooLowException::operator= (AForm::GradeTooLowException const & src){
-	if (*this != src)
-	{
-		std::out_of_range *e1 = this;
-		std::out_of_range const *e2 = &src;
-		*this = *e2;
-	}
+    : std::out_of_range (src.what ()){};
+AForm::GradeTooLowException & AForm::GradeTooLowException::operator= (AForm::GradeTooLowException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
 	return *this;
-
 };
 AForm::GradeTooLowException::~GradeTooLowException (){};
 
@@ -101,12 +107,14 @@ AForm::FormNotSignedException::FormNotSignedException (std::string const & name)
 AForm::FormNotSignedException::FormNotSignedException ()
     : std::exception (), _message ("The form is not signed"){};
 AForm::FormNotSignedException::FormNotSignedException (AForm::FormNotSignedException const & src)
-    : FormNotSignedException (src._message){};
+    : std::exception (), _message (src._message){};
 AForm::FormNotSignedException & AForm::FormNotSignedException::operator= (AForm::FormNotSignedException const & src)
 {
-	if (this == &src)
-		return *this;
-	this->_message = src._message;
+	if (this != &src)
+	{
+		std::exception::operator= (src);
+		this->_message = src._message;
+	}
 	return *this;
 }
 AForm::FormNotSignedException::~FormNotSignedException (){};
@@ -131,7 +139,7 @@ std::ostream & operator<< (std::ostream & out, AForm const & src)
 void AForm::checkAndExecute (Bureaucrat const & executor) const
 {
 	if (!_signed)
-		throw FormNotSigned (_name);
+		throw FormNotSignedException (_name);
 	if (executor.getGrade () < _executeGrade)
 		throw GradeTooLowException (_name, "execution", executor.getGrade ());
 	execute (executor);
