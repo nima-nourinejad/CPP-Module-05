@@ -71,8 +71,32 @@ std::ostream & operator<< (std::ostream & out, Bureaucrat const & src)
 	return out;
 };
 
+////////////////
 Bureaucrat::GradeTooHighException::GradeTooHighException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " bureaucrat : " + type + " Error: Grade " + std::to_string (grade) + " is too high"){};
-
+Bureaucrat::GradeTooHighException::GradeTooHighException ()
+    : std::out_of_range ("The grade is too high"){};
+Bureaucrat::GradeTooHighException::GradeTooHighException (GradeTooHighException const & src)
+    : std::out_of_range (src.what ()){};
+Bureaucrat::GradeTooHighException & Bureaucrat::GradeTooHighException::operator= (GradeTooHighException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
+	return *this;
+}
+Bureaucrat::GradeTooHighException::~GradeTooHighException (){};
+///////////
 Bureaucrat::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " bureaucrat : " + type + " Error : Grade " + std::to_string (grade) + " is too low"){};
+Bureaucrat::GradeTooLowException::GradeTooLowException ()
+    : std::out_of_range ("The grade is too low"){};
+Bureaucrat::GradeTooLowException::GradeTooLowException (Bureaucrat::GradeTooLowException const & src)
+    : std::out_of_range (src.what ()){};
+Bureaucrat::GradeTooLowException & Bureaucrat::GradeTooLowException::operator= (Bureaucrat::GradeTooLowException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
+	return *this;
+};
+Bureaucrat::GradeTooLowException::~GradeTooLowException (){};
+///////////////////////
