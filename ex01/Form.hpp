@@ -2,7 +2,7 @@
 #define FORM_HPP
 
 #include <ostream>
-#include <stdexcept>
+#include <exception>
 #include <string>
 
 class Bureaucrat;
@@ -17,6 +17,11 @@ class Form
 		static int const _lowestGrade;
 		static int const _highestGrade;
 		void check_valid_grades (int signGrade, int executeGrade, std::string const & name, std::string const & type) const;
+		class GradeTooHighException : public std::out_of_range
+		{
+			public:
+				GradeTooHighException (std::string const & name, std::string const & type, int grade);
+		};
 
 	public:
 		Form ();
@@ -29,11 +34,6 @@ class Form
 		int getSignGrade () const;
 		int getExecuteGrade () const;
 		void beSigned (Bureaucrat const & bureaucrat);
-		class GradeTooHighException : public std::out_of_range
-		{
-			public:
-				GradeTooHighException (std::string const & name, std::string const & type, int grade);
-		};
 		class GradeTooLowException : public std::out_of_range
 		{
 			public:

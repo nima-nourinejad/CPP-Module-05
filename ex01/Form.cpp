@@ -9,13 +9,13 @@ void Form::check_valid_grades (int signGrade, int executeGrade, std::string cons
 {
 
 	if (signGrade > _lowestGrade)
-		throw Form::GradeTooLowException (name, type, signGrade);
+		throw GradeTooLowException (name, type, signGrade);
 	if (signGrade < _highestGrade)
-		throw Form::GradeTooHighException (name, type, signGrade);
+		throw GradeTooHighException (name, type, signGrade);
 	if (executeGrade > _lowestGrade)
-		throw Form::GradeTooLowException (name, type, executeGrade);
+		throw GradeTooLowException (name, type, executeGrade);
 	if (executeGrade < _highestGrade)
-		throw Form::GradeTooHighException (name, type, executeGrade);
+		throw GradeTooHighException (name, type, executeGrade);
 }
 
 /////////////////////// Construtors
@@ -24,12 +24,12 @@ Form::Form ()
 Form::Form (std::string const & name, int signGrade, int executeGrade)
     : _name (name), _signed (false), _signGrade (signGrade), _executeGrade (executeGrade)
 {
-	Form::check_valid_grades (signGrade, executeGrade, name, "construction");
+	check_valid_grades (signGrade, executeGrade, name, "construction");
 };
 Form::Form (Form const & src)
     : _name (src._name), _signed (false), _signGrade (src._signGrade), _executeGrade (src._executeGrade)
 {
-	Form::check_valid_grades (src._signGrade, src._executeGrade, _name, "copy construction");
+	check_valid_grades (src._signGrade, src._executeGrade, _name, "copy construction");
 };
 
 /////////////////////// Copy Assignment
@@ -68,7 +68,7 @@ void Form::beSigned (Bureaucrat const & bureaucrat)
 	if (bureaucrat.getGrade () <= _signGrade)
 		_signed = true;
 	else
-		throw Form::GradeTooLowException (_name, "beSigned", bureaucrat.getGrade ());
+		throw GradeTooLowException (_name, "beSigned", bureaucrat.getGrade ());
 };
 
 /////////////////////// Exceptions

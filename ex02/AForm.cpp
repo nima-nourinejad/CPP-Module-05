@@ -9,13 +9,13 @@ void AForm::check_valid_grades (int signGrade, int executeGrade, std::string con
 {
 
 	if (signGrade > _lowestGrade)
-		throw AForm::GradeTooLowException (name, type, signGrade);
+		throw GradeTooLowException (name, type, signGrade);
 	if (signGrade < _highestGrade)
-		throw AForm::GradeTooHighException (name, type, signGrade);
+		throw GradeTooHighException (name, type, signGrade);
 	if (executeGrade > _lowestGrade)
-		throw AForm::GradeTooLowException (name, type, executeGrade);
+		throw GradeTooLowException (name, type, executeGrade);
 	if (executeGrade < _highestGrade)
-		throw AForm::GradeTooHighException (name, type, executeGrade);
+		throw GradeTooHighException (name, type, executeGrade);
 }
 
 /////////////////////// Construtors
@@ -24,12 +24,12 @@ AForm::AForm ()
 AForm::AForm (std::string const & name, int signGrade, int executeGrade)
     : _name (name), _signed (false), _signGrade (signGrade), _executeGrade (executeGrade)
 {
-	AForm::check_valid_grades (signGrade, executeGrade, name, "construction");
+	check_valid_grades (signGrade, executeGrade, name, "construction");
 };
 AForm::AForm (AForm const & src)
     : _name (src._name), _signed (false), _signGrade (src._signGrade), _executeGrade (src._executeGrade)
 {
-	AForm::check_valid_grades (src._signGrade, src._executeGrade, _name, "copy construction");
+	check_valid_grades (src._signGrade, src._executeGrade, _name, "copy construction");
 };
 
 /////////////////////// Copy Assignment
@@ -68,15 +68,52 @@ void AForm::beSigned (Bureaucrat const & bureaucrat)
 	if (bureaucrat.getGrade () <= _signGrade)
 		_signed = true;
 	else
-		throw AForm::GradeTooLowException (_name, "beSigned", bureaucrat.getGrade ());
+		throw GradeTooLowException (_name, "beSigned", bureaucrat.getGrade ());
 };
 
 /////////////////////// Exceptions
 AForm::GradeTooHighException::GradeTooHighException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too high"){};
+
+///////////
+
 AForm::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too low"){};
+AForm::GradeTooLowException::GradeTooLowException ()
+    : std::out_of_range ("The grade is too low"){};
+AForm::GradeTooLowException::GradeTooLowException (AForm::GradeTooLowException const & src)
+    : std::out_of_range (src){};
+AForm::GradeTooLowException & AForm::GradeTooLowException::operator= (AForm::GradeTooLowException const & src){
+	if (*this != src)
+	{
+		std::out_of_range *e1 = this;
+		std::out_of_range const *e2 = &src;
+		*this = *e2;
+	}
+	return *this;
 
+};
+AForm::GradeTooLowException::~GradeTooLowException (){};
+
+///////////////////////
+AForm::FormNotSignedException::FormNotSignedException (std::string const & name)
+    : std::exception (), _message (name + " form: The form is not signed."){};
+AForm::FormNotSignedException::FormNotSignedException ()
+    : std::exception (), _message ("The form is not signed"){};
+AForm::FormNotSignedException::FormNotSignedException (AForm::FormNotSignedException const & src)
+    : FormNotSignedException (src._message){};
+AForm::FormNotSignedException & AForm::FormNotSignedException::operator= (AForm::FormNotSignedException const & src)
+{
+	if (this == &src)
+		return *this;
+	this->_message = src._message;
+	return *this;
+}
+AForm::FormNotSignedException::~FormNotSignedException (){};
+char const * AForm::FormNotSignedException::what () const
+{
+	return (_message.c_str ());
+};
 /////////////////////// Insertation Operator
 std::ostream & operator<< (std::ostream & out, AForm const & src)
 {
@@ -88,4 +125,14 @@ std::ostream & operator<< (std::ostream & out, AForm const & src)
 	else
 		out << ", not signed)";
 	return out;
+};
+
+/////////////////////// checkAndExecute
+void AForm::checkAndExecute (Bureaucrat const & executor) const
+{
+	if (!_signed)
+		throw FormNotSigned (_name);
+	if (executor.getGrade () < _executeGrade)
+		throw GradeTooLowException (_name, "execution", executor.getGrade ());
+	execute (executor);
 };
