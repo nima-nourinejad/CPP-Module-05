@@ -21,6 +21,10 @@ class Form
 		{
 			public:
 				GradeTooHighException (std::string const & name, std::string const & type, int grade);
+				GradeTooHighException();
+				GradeTooHighException(GradeTooHighException const & src);
+				GradeTooHighException & operator=(GradeTooHighException const & src);
+				~GradeTooHighException() noexcept;
 		};
 
 	public:
@@ -38,6 +42,10 @@ class Form
 		{
 			public:
 				GradeTooLowException (std::string const & name, std::string const & type, int grade);
+				GradeTooLowException();
+				GradeTooLowException(GradeTooLowException const & src);
+				GradeTooLowException & operator=(GradeTooLowException const & src);
+				~GradeTooLowException() noexcept;
 		};
 };
 

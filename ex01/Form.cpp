@@ -74,9 +74,31 @@ void Form::beSigned (Bureaucrat const & bureaucrat)
 /////////////////////// Exceptions
 Form::GradeTooHighException::GradeTooHighException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too high"){};
+Form::GradeTooHighException::GradeTooHighException ()
+    : std::out_of_range ("The grade is too high"){};
+Form::GradeTooHighException::GradeTooHighException (GradeTooHighException const & src)
+    : std::out_of_range (src.what ()){};
+Form::GradeTooHighException & Form::GradeTooHighException::operator= (GradeTooHighException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
+	return *this;
+}
+Form::GradeTooHighException::~GradeTooHighException (){};
+///////////
 Form::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too low"){};
-
+Form::GradeTooLowException::GradeTooLowException ()
+    : std::out_of_range ("The grade is too low"){};
+Form::GradeTooLowException::GradeTooLowException (Form::GradeTooLowException const & src)
+    : std::out_of_range (src.what ()){};
+Form::GradeTooLowException & Form::GradeTooLowException::operator= (Form::GradeTooLowException const & src)
+{
+	if (this != &src)
+		std::out_of_range::operator= (src);
+	return *this;
+};
+Form::GradeTooLowException::~GradeTooLowException (){};
 /////////////////////// Insertation Operator
 std::ostream & operator<< (std::ostream & out, Form const & src)
 {
