@@ -4,6 +4,7 @@
 #include <exception>
 #include <ostream>
 #include <string>
+#include <utility>
 
 class Bureaucrat;
 

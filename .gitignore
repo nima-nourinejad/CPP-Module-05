@@ -36,3 +36,6 @@
 
 # Ignore Visual Studio Code settings directory
 .vscode/
+
+# Other
+*_shrubbery

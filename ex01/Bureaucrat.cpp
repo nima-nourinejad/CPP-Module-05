@@ -84,7 +84,7 @@ Bureaucrat::GradeTooHighException & Bureaucrat::GradeTooHighException::operator=
 		std::out_of_range::operator= (src);
 	return *this;
 }
-Bureaucrat::GradeTooHighException::~GradeTooHighException (){};
+Bureaucrat::GradeTooHighException::~GradeTooHighException () noexcept {};
 ///////////
 Bureaucrat::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " bureaucrat : " + type + " Error : Grade " + std::to_string (grade) + " is too low"){};
@@ -98,7 +98,7 @@ Bureaucrat::GradeTooLowException & Bureaucrat::GradeTooLowException::operator= (
 		std::out_of_range::operator= (src);
 	return *this;
 };
-Bureaucrat::GradeTooLowException::~GradeTooLowException (){};
+Bureaucrat::GradeTooLowException::~GradeTooLowException () noexcept {};
 ///////////////////////
 void Bureaucrat::signForm (Form & form) const
 {

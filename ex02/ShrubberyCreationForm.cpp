@@ -4,7 +4,7 @@
 ShrubberyCreationForm::ShrubberyCreationForm ()
     : ShrubberyCreationForm ("no_target"){};
 ShrubberyCreationForm::ShrubberyCreationForm (std::string const & target)
-    : AForm ("ShrubberyCreationForm", 25, 5), _target (target){};
+    : AForm ("ShrubberyCreationForm", 145, 137), _target (target){};
 ShrubberyCreationForm::ShrubberyCreationForm (ShrubberyCreationForm const & src)
     : AForm (src), _target (src._target){};
 // Copy Assignment
@@ -23,8 +23,12 @@ ShrubberyCreationForm::~ShrubberyCreationForm (){};
 void ShrubberyCreationForm::perform () const
 {
 	std::string fileName = _target + "_shrubbery";
-	std::ostream file = open(fileName.c_str());
-}
+	std::ofstream file (fileName);
+	if (!file.is_open())
+		throw std::runtime_error("Creating filed failed" + fileName);
+	file << "ASCII trees";
+	file.close();
+};
 
 // Move
 ShrubberyCreationForm::ShrubberyCreationForm (ShrubberyCreationForm && src)

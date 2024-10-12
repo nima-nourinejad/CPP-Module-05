@@ -84,7 +84,7 @@ Form::GradeTooHighException & Form::GradeTooHighException::operator= (GradeTooHi
 		std::out_of_range::operator= (src);
 	return *this;
 }
-Form::GradeTooHighException::~GradeTooHighException (){};
+Form::GradeTooHighException::~GradeTooHighException () noexcept {};
 ///////////
 Form::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
     : std::out_of_range (name + " form : " + type + " Error: Grade " + std::to_string (grade) + " is too low"){};
@@ -98,7 +98,7 @@ Form::GradeTooLowException & Form::GradeTooLowException::operator= (Form::GradeT
 		std::out_of_range::operator= (src);
 	return *this;
 };
-Form::GradeTooLowException::~GradeTooLowException (){};
+Form::GradeTooLowException::~GradeTooLowException () noexcept {};
 /////////////////////// Insertation Operator
 std::ostream & operator<< (std::ostream & out, Form const & src)
 {

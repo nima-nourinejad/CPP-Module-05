@@ -1,42 +1,88 @@
-#include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include <memory>
+#include "Bureaucrat.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main ()
 {
-	std::unique_ptr<AForm> form1 = std::make_unique<AForm> ("f1", 75, 75);
-	std::unique_ptr<AForm> form2 = std::make_unique<AForm> ("f2", 100, 100);
-	std::unique_ptr<Bureaucrat> bureaucrat = std::make_unique<Bureaucrat> ("b1", 80);
+	// Create bureaucrats with various grades
+	Bureaucrat john ("John", 150);	// low grade
+	Bureaucrat alice ("Alice", 50); // medium grade
+	Bureaucrat bob ("Bob", 20);	// high grade
+
+	// Create forms
+	ShrubberyCreationForm shrubbery ("home");
+	RobotomyRequestForm robotomy ("Bob");
+	PresidentialPardonForm pardon ("Alice");
+
+	// Try signing the forms
 	try
 	{
-		form1->beSigned (*bureaucrat);
-		std::cout << "Successful signing of " << *form1 << std::endl;
+		john.signForm (shrubbery); // Should fail
 	}
-	catch (std::exception const & e)
+	catch (const std::exception & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}
+
 	try
 	{
-		form2->beSigned (*bureaucrat);
-		std::cout << "Successful signing of " << *form2 << std::endl;
+		alice.signForm (robotomy); // Should succeed
+		alice.signForm (pardon);   // Should succeed
 	}
-	catch (std::exception const & e)
+	catch (const std::exception & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}
+
+	// Try executing the forms
 	try
 	{
-		bureaucrat->signForm (*form1);
+		bob.executeForm (shrubbery); // Should fail (not signed)
 	}
-	catch (...)
+	catch (const std::exception & e)
 	{
+		std::cerr << e.what () << std::endl;
 	}
+
 	try
 	{
-		bureaucrat->signForm (*form2);
+		bob.signForm (shrubbery); // Should succeed
+		bob.executeForm (shrubbery);
 	}
-	catch (...)
+	catch (const std::exception & e)
 	{
+		std::cerr << e.what () << std::endl;
 	}
+
+	try
+	{
+		bob.executeForm (robotomy); // Should succeed
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+
+	try
+	{
+		alice.executeForm (pardon); // Should succeed
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+
+	// Check the outcome of RobotomyRequestForm execution
+	try
+	{
+		bob.executeForm (robotomy);
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+
+	return 0;
 }

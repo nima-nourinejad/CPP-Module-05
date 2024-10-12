@@ -84,7 +84,7 @@ AForm::GradeTooHighException & AForm::GradeTooHighException::operator= (GradeToo
 		std::out_of_range::operator= (src);
 	return *this;
 }
-AForm::GradeTooHighException::~GradeTooHighException (){};
+AForm::GradeTooHighException::~GradeTooHighException () noexcept {};
 ///////////
 
 AForm::GradeTooLowException::GradeTooLowException (std::string const & name, std::string const & type, int grade)
@@ -99,7 +99,7 @@ AForm::GradeTooLowException & AForm::GradeTooLowException::operator= (AForm::Gra
 		std::out_of_range::operator= (src);
 	return *this;
 };
-AForm::GradeTooLowException::~GradeTooLowException (){};
+AForm::GradeTooLowException::~GradeTooLowException () noexcept {};
 
 ///////////////////////
 AForm::FormNotSignedException::FormNotSignedException (std::string const & name)
@@ -117,8 +117,8 @@ AForm::FormNotSignedException & AForm::FormNotSignedException::operator= (AForm:
 	}
 	return *this;
 }
-AForm::FormNotSignedException::~FormNotSignedException (){};
-char const * AForm::FormNotSignedException::what () const
+AForm::FormNotSignedException::~FormNotSignedException () noexcept {};
+char const * AForm::FormNotSignedException::what () const noexcept
 {
 	return (_message.c_str ());
 };
@@ -140,7 +140,7 @@ void AForm::checkForExecute (Bureaucrat const & executor) const
 {
 	if (!_signed)
 		throw FormNotSignedException (_name);
-	if (executor.getGrade () < _executeGrade)
+	if (executor.getGrade () > _executeGrade)
 		throw GradeTooLowException (_name, "execution", executor.getGrade ());
 };
 

@@ -4,7 +4,7 @@
 #include "AForm.hpp"
 #include <iostream>
 #include <string>
-#include <ostream>
+#include <fstream>
 
 class ShrubberyCreationForm : public AForm
 {
