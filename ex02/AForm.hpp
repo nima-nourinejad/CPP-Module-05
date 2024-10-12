@@ -63,6 +63,9 @@ class AForm
 		void checkForExecute (Bureaucrat const & executor) const;
 		virtual void perform () const = 0;
 		void execute (Bureaucrat const & executor) const;
+
+		AForm(AForm && src);
+		AForm & operator =(AForm && src);
 };
 
 std::ostream & operator<< (std::ostream & out, AForm const & src);

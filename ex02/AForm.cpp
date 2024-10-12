@@ -146,6 +146,22 @@ void AForm::checkForExecute (Bureaucrat const & executor) const
 
 void AForm::execute (Bureaucrat const & executor) const
 {
-	checkForExecute(executor);
-	perform();
+	checkForExecute (executor);
+	perform ();
+};
+
+////Move
+AForm ::AForm (AForm && src)
+    : _name (std::move (src._name)), _signed (src._signed), _signGrade (src._signGrade), _executeGrade (src._executeGrade)
+{
+	src._signed = false;
+};
+AForm & AForm::operator= (AForm && src)
+{
+	if (this != &src)
+	{
+		_signed = src._signed;
+		src._signed = false;
+	}
+	return *this;
 };

@@ -36,3 +36,14 @@ void RobotomyRequestForm::perform () const
 		_success = true;
 	}
 };
+
+//Move
+RobotomyRequestForm::RobotomyRequestForm (RobotomyRequestForm  && src) : AForm::AForm(std::move(src)), _target(std::move(src._target)){};
+RobotomyRequestForm & RobotomyRequestForm::operator= (RobotomyRequestForm && src){
+	if (this != &src)
+	{
+		AForm::operator=(std::move(src));
+		_target = std::move(src._target);
+	}
+	return *this;
+};

@@ -18,6 +18,8 @@ class RobotomyRequestForm : public AForm
 		RobotomyRequestForm & operator= (RobotomyRequestForm const & src);
 		~RobotomyRequestForm ();
 		void perform () const override;
+		RobotomyRequestForm (RobotomyRequestForm  && src);
+		RobotomyRequestForm & operator= (RobotomyRequestForm && src);
 };
 
 #endif
