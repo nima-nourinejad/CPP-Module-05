@@ -21,10 +21,10 @@ class AForm
 		{
 			public:
 				GradeTooHighException (std::string const & name, std::string const & type, int grade);
-				GradeTooHighException();
-				GradeTooHighException(GradeTooHighException const & src);
-				GradeTooHighException & operator=(GradeTooHighException const & src);
-				~GradeTooHighException() noexcept;
+				GradeTooHighException ();
+				GradeTooHighException (GradeTooHighException const & src);
+				GradeTooHighException & operator= (GradeTooHighException const & src);
+				~GradeTooHighException () noexcept;
 		};
 
 	public:
@@ -42,10 +42,10 @@ class AForm
 		{
 			public:
 				GradeTooLowException (std::string const & name, std::string const & type, int grade);
-				GradeTooLowException();
-				GradeTooLowException(GradeTooLowException const & src);
-				GradeTooLowException & operator=(GradeTooLowException const & src);
-				~GradeTooLowException() noexcept;
+				GradeTooLowException ();
+				GradeTooLowException (GradeTooLowException const & src);
+				GradeTooLowException & operator= (GradeTooLowException const & src);
+				~GradeTooLowException () noexcept;
 		};
 		class FormNotSignedException : public std::exception
 		{
@@ -60,8 +60,9 @@ class AForm
 				FormNotSignedException (std::string const & name);
 				char const * what () const noexcept override;
 		};
-		void checkAndExecute (Bureaucrat const & executor) const;
-		virtual void execute (Bureaucrat const & executor) const = 0;
+		void checkForExecute (Bureaucrat const & executor) const;
+		virtual void perform () const = 0;
+		void execute (Bureaucrat const & executor) const;
 };
 
 std::ostream & operator<< (std::ostream & out, AForm const & src);

@@ -136,11 +136,16 @@ std::ostream & operator<< (std::ostream & out, AForm const & src)
 };
 
 /////////////////////// checkAndExecute
-void AForm::checkAndExecute (Bureaucrat const & executor) const
+void AForm::checkForExecute (Bureaucrat const & executor) const
 {
 	if (!_signed)
 		throw FormNotSignedException (_name);
 	if (executor.getGrade () < _executeGrade)
 		throw GradeTooLowException (_name, "execution", executor.getGrade ());
-	execute (executor);
+};
+
+void AForm::execute (Bureaucrat const & executor) const
+{
+	checkForExecute(executor);
+	perform();
 };
