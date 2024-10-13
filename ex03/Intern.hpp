@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <ostream>
 class AForm;
 
 class Intern
@@ -15,6 +16,9 @@ class Intern
 		Intern & operator= (Intern && src);
 		~Intern ();
 		AForm * makeForm(std::string const & name, std::string const & target) const;
+		using fptr = AForm * (std::string const & target);
 };
+
+std::ostream & operator<<(std::ostream & out, Intern const & src);
 
 #endif
