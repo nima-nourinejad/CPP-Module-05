@@ -5,8 +5,14 @@
 
 /////////Constructors
 Intern::Intern (){};
-Intern::Intern (Intern const & src){(void)src;};
-Intern::Intern (Intern && src){(void)src;};
+Intern::Intern (Intern const & src)
+{
+	(void)src;
+};
+Intern::Intern (Intern && src)
+{
+	(void)src;
+};
 
 /////////Assignment Operator
 Intern & Intern::operator= (Intern const & src)
@@ -41,13 +47,10 @@ AForm * Intern::makeForm (std::string const & name, std::string const & target) 
 	while (index < 3)
 	{
 		if (formName == forms[index])
-			break;
+			return (formMakers[index]);
 		index++;
 	}
-	if (index == 3)
-		return (printError (name));
-	AForm * form = formMakers[index];
-	return form;
+	return (printError (name));
 };
 
 ///////Insertation Operator
