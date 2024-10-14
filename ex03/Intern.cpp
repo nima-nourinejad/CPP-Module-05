@@ -3,13 +3,14 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 
-void coustomPrint (std::string const & name, AForm const *form, std::string flag)
+void customPrint (std::string const & name, AForm const *form, std::string flag)
 {
 	if (flag == "Fail")
-		std::cerr << name << " form does not exists" << std::endl;
+		std::cerr << name << " form does not exist" << std::endl;
 	else if (flag == "Successfull")
 		std::cout << "Intern creates " << *form << std::endl;
 };
+
 std::string parseName (std::string const & name)
 {
 	size_t find = name.find (" ");
@@ -37,12 +38,12 @@ AForm * Intern::makeForm (std::string const & name, std::string const & target) 
 		if (formName == forms[index])
 		{
 			AForm *form = formMakers[index](target);
-			coustomPrint(name, form, "Successfull");
+			customPrint(name, form, "Successfull");
 			return form;
 		}
 		index++;
 	}
-	coustomPrint(name, nullptr, "Fail");
+	customPrint(name, nullptr, "Fail");
 	return nullptr;
 };
 
@@ -62,13 +63,10 @@ std::unique_ptr<AForm> Intern::makeSmartForm (std::string const & name, std::str
 	{
 		case 0:
 			return std::make_unique<ShrubberyCreationForm> (target);
-			break;
 		case 1:
 			return std::make_unique<RobotomyRequestForm> (target);
-			break;
 		case 2:
 			return std::make_unique<PresidentialPardonForm> (target);
-			break;
 		default:
 			throw std::invalid_argument (name + " form does not exists");
 	}
