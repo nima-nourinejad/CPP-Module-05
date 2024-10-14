@@ -2,8 +2,8 @@
 #define INTERN_HPP
 
 #include <iostream>
-#include <string>
 #include <ostream>
+#include <string>
 class AForm;
 
 class Intern
@@ -15,10 +15,10 @@ class Intern
 		Intern & operator= (Intern const & src);
 		Intern & operator= (Intern && src);
 		~Intern ();
-		AForm * makeForm(std::string const & name, std::string const & target) const;
-		using fptr = AForm * (std::string const & target);
+		AForm * makeForm (std::string const & name, std::string const & target) const;
+		using formMaker = AForm * (*)(const std::string &);
 };
 
-std::ostream & operator<<(std::ostream & out, Intern const & src);
+std::ostream & operator<< (std::ostream & out, Intern const & src);
 
 #endif

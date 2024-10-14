@@ -42,12 +42,18 @@ AForm * Intern::makeForm (std::string const & name, std::string const & target) 
 		return (printError (name));
 	std::string formName = name.substr (0, find) + name.substr (find + 1);
 	std::string forms[] = {"ShrubberyCreation", "RobotomyRequest", "PresidentialPardon"};
-	fptr formMakers[] = (ShrubberyCreationForm::ShrubberyCreationForm, RobotomyRequestForm::RobotomyRequestForm, PresidentialPardonForm::PresidentialPardonForm);
+	formMaker formMakers[] =
+	    {[] (std::string const & target) -> AForm *
+	     { return new ShrubberyCreationForm (target); },
+	     [] (std::string const & target) -> AForm *
+	     { return new RobotomyRequestForm (target); },
+	     [] (std::string const & target) -> AForm *
+	     { return new PresidentialPardonForm (target); }};
 	int index = 0;
 	while (index < 3)
 	{
 		if (formName == forms[index])
-			return (formMakers[index]);
+			return formMakers[index](target);
 		index++;
 	}
 	return (printError (name));
