@@ -3,45 +3,27 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 
-/////////Constructors
-Intern::Intern (){};
-Intern::Intern (Intern const & src)
+void coustomPrint (std::string const & name, AForm const *form, std::string flag)
 {
-	(void)src;
+	if (flag == "Fail")
+		std::cerr << name << " form does not exists" << std::endl;
+	else if (flag == "Successfull")
+		std::cout << "Intern creates " << *form << std::endl;
 };
-Intern::Intern (Intern && src)
-{
-	(void)src;
-};
-
-/////////Assignment Operator
-Intern & Intern::operator= (Intern const & src)
-{
-	(void)src;
-	return *this;
-}
-Intern & Intern::operator= (Intern && src)
-{
-	(void)src;
-	return *this;
-}
-
-////////Destructor
-Intern::~Intern (){};
-
-///////makeForm
-AForm * printError (std::string const & name)
-{
-	std::cerr << name << " form does not exists" << std::endl;
-	return nullptr;
-};
-AForm * Intern::makeForm (std::string const & name, std::string const & target) const
+std::string parseName (std::string const & name)
 {
 	size_t find = name.find (" ");
 	if (find == std::string::npos)
-		return (printError (name));
+		return ("Error");
 	std::string formName = name.substr (0, find) + name.substr (find + 1);
-	std::string forms[] = {"ShrubberyCreation", "RobotomyRequest", "PresidentialPardon"};
+	return formName;
+}
+
+//////Raw Pointer
+AForm * Intern::makeForm (std::string const & name, std::string const & target) const
+{
+	std::string formName = parseName (name);
+	std::string forms[] = {"shrubberycreation", "robotomyrequest", "presidentialpardon"};
 	formMaker formMakers[] =
 	    {[] (std::string const & target) -> AForm *
 	     { return new ShrubberyCreationForm (target); },
@@ -53,10 +35,43 @@ AForm * Intern::makeForm (std::string const & name, std::string const & target) 
 	while (index < 3)
 	{
 		if (formName == forms[index])
-			return formMakers[index](target);
+		{
+			AForm *form = formMakers[index](target);
+			coustomPrint(name, form, "Successfull");
+			return form;
+		}
 		index++;
 	}
-	return (printError (name));
+	coustomPrint(name, nullptr, "Fail");
+	return nullptr;
+};
+
+//////Smart Pointer
+std::unique_ptr<AForm> Intern::makeSmartForm (std::string const & name, std::string const & target) const
+{
+	std::string formName = parseName (name);
+	std::string forms[] = {"shrubberycreation", "robotomyrequest", "presidentialpardon"};
+	int index = 0;
+	while (index < 3)
+	{
+		if (formName == forms[index])
+			break;
+		index++;
+	}
+	switch (index)
+	{
+		case 0:
+			return std::make_unique<ShrubberyCreationForm> (target);
+			break;
+		case 1:
+			return std::make_unique<RobotomyRequestForm> (target);
+			break;
+		case 2:
+			return std::make_unique<PresidentialPardonForm> (target);
+			break;
+		default:
+			throw std::invalid_argument (name + " form does not exists");
+	}
 };
 
 ///////Insertation Operator
