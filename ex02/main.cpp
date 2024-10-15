@@ -6,20 +6,23 @@
 
 int main ()
 {
-	// Create bureaucrats with various grades
-	Bureaucrat john ("John", 150);	// low grade
-	Bureaucrat alice ("Alice", 50); // medium grade
-	Bureaucrat bob ("Bob", 20);	// high grade
+	
+	Bureaucrat john ("John", 150);
+	Bureaucrat alice ("Alice", 50);
+	Bureaucrat bob ("Bob", 20);
 
-	// Create forms
-	ShrubberyCreationForm shrubbery ("home");
-	RobotomyRequestForm robotomy ("Bob");
-	PresidentialPardonForm pardon ("Alice");
+	
+	ShrubberyCreationForm shrubbery ("shrubbery");
+	std::cout<< shrubbery << " is created" << std::endl;
+	RobotomyRequestForm robotomy ("robotomy");
+	std::cout<< robotomy << " is created" << std::endl;
+	PresidentialPardonForm pardon ("pardon");
+	std::cout<< pardon << " is created" << std::endl;
 
-	// Try signing the forms
+		
 	try
 	{
-		john.signForm (shrubbery); // Should fail
+		john.signForm (shrubbery);
 	}
 	catch (const std::exception & e)
 	{
@@ -28,27 +31,17 @@ int main ()
 
 	try
 	{
-		alice.signForm (robotomy); // Should succeed
-		alice.signForm (pardon);   // Should succeed
+		alice.signForm (robotomy);
+		alice.signForm (pardon);
 	}
 	catch (const std::exception & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}
 
-	// Try executing the forms
+	
 	try
 	{
-		bob.executeForm (shrubbery); // Should fail (not signed)
-	}
-	catch (const std::exception & e)
-	{
-		std::cerr << e.what () << std::endl;
-	}
-
-	try
-	{
-		bob.signForm (shrubbery); // Should succeed
 		bob.executeForm (shrubbery);
 	}
 	catch (const std::exception & e)
@@ -58,7 +51,8 @@ int main ()
 
 	try
 	{
-		bob.executeForm (robotomy); // Should succeed
+		bob.signForm (shrubbery);
+		bob.executeForm (shrubbery);
 	}
 	catch (const std::exception & e)
 	{
@@ -67,14 +61,23 @@ int main ()
 
 	try
 	{
-		alice.executeForm (pardon); // Should succeed
+		bob.executeForm (robotomy);
 	}
 	catch (const std::exception & e)
 	{
 		std::cerr << e.what () << std::endl;
 	}
 
-	// Check the outcome of RobotomyRequestForm execution
+	try
+	{
+		alice.executeForm (pardon);
+	}
+	catch (const std::exception & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+
+	
 	try
 	{
 		bob.executeForm (robotomy);
