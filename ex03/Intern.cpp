@@ -13,12 +13,41 @@ void customPrint (std::string const & name, AForm const *form, std::string flag)
 
 std::string parseName (std::string const & name)
 {
+	if (name.empty())
+		return ("Error");
 	size_t find = name.find (" ");
 	if (find == std::string::npos)
 		return ("Error");
 	std::string formName = name.substr (0, find) + name.substr (find + 1);
 	return formName;
 }
+
+
+/////////Constructors
+Intern::Intern (){};
+Intern::Intern (Intern const & src)
+{
+	(void)src;
+};
+Intern::Intern (Intern && src)
+{
+	(void)src;
+};
+
+/////////Assignment Operator
+Intern & Intern::operator= (Intern const & src)
+{
+	(void)src;
+	return *this;
+}
+Intern & Intern::operator= (Intern && src)
+{
+	(void)src;
+	return *this;
+}
+
+//////Destructor
+Intern::~Intern (){};
 
 //////Raw Pointer
 AForm * Intern::makeForm (std::string const & name, std::string const & target) const

@@ -1,4 +1,5 @@
 #include "Intern.hpp"
+#include "Bureaucrat.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
@@ -14,6 +15,18 @@ int main ()
 	}
 
 	{
+		AForm * form = intern.makeForm (" ", "shrubberyForm");
+		if (form)
+			delete form;
+	}
+
+	{
+		AForm * form = intern.makeForm ("  	", "shrubberyForm");
+		if (form)
+			delete form;
+	}
+
+	{
 		AForm * form  = intern.makeForm ("robotomy request", "robotomyRequest");
 		if (form)
 			delete form;
@@ -21,6 +34,9 @@ int main ()
 
 	{
 		AForm * form  = intern.makeForm ("presidential pardon", "presidentialPardon");
+		Bureaucrat john("john", 1);
+		form->beSigned(john);
+		std::cout << "After signing:" << *form << std::endl;
 		if (form)
 			delete form;
 	}
