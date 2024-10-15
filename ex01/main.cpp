@@ -9,6 +9,55 @@ int main ()
 	std::unique_ptr<Bureaucrat> bureaucrat = std::make_unique<Bureaucrat> ("b1", 80);
 	try
 	{
+		Form form ("tooHigh", 0, 1);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Form form ("tooHigh", 1, 0);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Form form ("tooHigh", 0, 0);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Form form ("tooLow", 151, 150);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Form form ("tooLow", 150, 151);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	try
+	{
+		Form form ("tooLow", 151, 151);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what () << std::endl;
+	}
+	
+	try
+	{
 		form1->beSigned (*bureaucrat);
 		std::cout << "Successful signing of " << *form1 << std::endl;
 	}
